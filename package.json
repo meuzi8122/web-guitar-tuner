@@ -15,13 +15,14 @@
     "check": "biome check"
   },
   "dependencies": {
-    "@chordbook/tuner": "chordbook/tuner",
+    "@chordbook/tuner": "^0.0.3",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-form": "latest",
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "latest",
     "@tanstack/react-start": "latest",
+    "daisyui": "^5.7.19",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.18",

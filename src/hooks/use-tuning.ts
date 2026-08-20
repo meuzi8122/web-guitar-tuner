@@ -3,17 +3,37 @@ import type { Tuning } from "#/domains/entities/tuner";
 
 type CurrentTuning = Tuning & { diff: number | null; selected: boolean };
 
-export const useTuner = (tunings: Tuning[]) => {
+export const useTuning = (tunings: Tuning[]) => {
+	const _initTuner = (tunings: Tuning[]) => {
+		return tunings.map((tuning) => ({
+			...tuning,
+			diff: null,
+			selected: false,
+		}));
+	};
+
 	const [currentTunings, setCurrentTunings] = useState<CurrentTuning[]>(
-		tunings.map((tuning) => ({ ...tuning, diff: null, selected: false })),
+		_initTuner(tunings),
 	);
 
-	const selectTuning = (params: { name: string }) => {
+	const initTuner = (nextTunings: Tuning[]) => {
+		setCurrentTunings(_initTuner(nextTunings));
+	};
+
+	const selectTuning = (params: { position: string }) => {
 		setCurrentTunings((prevTunings) =>
 			prevTunings.map((tuning) => ({
 				...tuning,
-				selected: tuning.name === params.name,
+				selected: tuning.position === params.position,
 			})),
+		);
+	};
+
+	const updateNote = (params: { note: string }) => {
+		setCurrentTunings((prevTunings) =>
+			prevTunings.map((tuning) =>
+				tuning.selected ? { ...tuning, note: params.note, diff: null } : tuning,
+			),
 		);
 	};
 
@@ -27,10 +47,10 @@ export const useTuner = (tunings: Tuning[]) => {
 		});
 	};
 
-	return { currentTunings, selectTuning, updateDiff };
+	return { currentTunings, initTuner, selectTuning, updateNote, updateDiff };
 };
 
-const FREQUENCIES: Record<string, number> = {
+export const FREQUENCIES: Record<string, number> = {
 	A0: 27.5,
 	"A#0": 29.14,
 	B0: 30.87,
