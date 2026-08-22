@@ -15,7 +15,7 @@ function TunerListPage() {
 
 	const handleRowClick = (id: string) => {
 		navigate({
-			to: "/tuners/:id",
+			to: "/tuners/$id",
 			params: { id },
 		});
 	};
