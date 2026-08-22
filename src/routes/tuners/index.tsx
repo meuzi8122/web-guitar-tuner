@@ -46,7 +46,9 @@ function TunerListPage() {
 							<tr
 								key={tuner.id}
 								className="hover:bg-base-300 hover:cursor-pointer"
-								onClick={() => handleRowClick(tuner.id)}
+								onClick={() => {
+									handleRowClick(tuner.id);
+								}}
 							>
 								<td>{tuner.name}</td>
 								<td>6弦ギター</td>
@@ -55,7 +57,10 @@ function TunerListPage() {
 									<button
 										type="button"
 										className="btn btn-ghost"
-										onClick={() => deleteCustomTuner({ id: tuner.id })}
+										onClick={(event) => {
+											event.stopPropagation();
+											deleteCustomTuner({ id: tuner.id });
+										}}
 									>
 										<TrashIcon />
 									</button>
