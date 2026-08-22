@@ -44,7 +44,7 @@ export function CommonTunerPage({
 	return (
 		<div className="container mx-auto flex flex-col space-y-3 items-center p-4">
 			<div className="w-full overflow-x-auto">
-				<div className="stats border border-base-300 shadow">
+				<div className="stats bg-base-200 border border-base-300 shadow-md">
 					{currentTunings.map((tuning) => {
 						const fontColor = tuning.selected ? "text-primary" : "";
 						return (
