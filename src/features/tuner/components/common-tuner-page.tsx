@@ -1,5 +1,7 @@
 import { createTuner } from "@chordbook/tuner";
 import { useEffect, useState } from "react";
+import { SaveIcon } from "#/components/icons/save-icon";
+import { TrashIcon } from "#/components/icons/trash-icon";
 import { DEFAULT_TUNERS, type Tuner } from "#/domains/entities/tuner";
 import { FREQUENCIES, useTuning } from "#/features/tuner/hooks/use-tuning";
 
@@ -8,9 +10,11 @@ export type HandleSaveButtonClickArgs = Omit<Tuner, "id"> & { id?: string };
 export function CommonTunerPage({
 	customTuner,
 	handleSaveButtonClick,
+	handleDeleteButtonClick,
 }: {
 	customTuner?: Tuner;
 	handleSaveButtonClick: (tuner: HandleSaveButtonClickArgs) => void;
+	handleDeleteButtonClick?: (id: string) => void;
 }) {
 	const { currentTunings, initTuner, selectTuning, updateNote, updateDiff } =
 		useTuning(customTuner ? customTuner.tunings : DEFAULT_TUNERS[0].tunings);
@@ -119,7 +123,17 @@ export function CommonTunerPage({
 						</select>
 					</fieldset>
 				</div>
-				<div className="flex justify-end">
+				<div className="flex justify-end space-x-2">
+					{handleDeleteButtonClick && customTuner && (
+						<button
+							type="button"
+							className="btn btn-error"
+							onClick={() => handleDeleteButtonClick(customTuner.id)}
+						>
+							<TrashIcon />
+							設定を削除
+						</button>
+					)}
 					<button
 						type="button"
 						className="btn btn-primary"
@@ -134,6 +148,7 @@ export function CommonTunerPage({
 						}}
 						disabled={name.trim() === ""}
 					>
+						<SaveIcon />
 						設定を保存
 					</button>
 				</div>

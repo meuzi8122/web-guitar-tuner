@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
 	CommonTunerPage,
 	type HandleSaveButtonClickArgs,
@@ -13,11 +13,13 @@ export const Route = createFileRoute("/tuners/$id")({
 function TunerDetailPage() {
 	const { id } = Route.useParams();
 
-	const { customTuners, updateCustomTuner } = useCustomTuners({ id });
+	const { customTuners, updateCustomTuner, deleteCustomTuner } =
+		useCustomTuners({ id });
 
 	const navigate = Route.useNavigate();
+	const isDeletingRef = useRef(false);
 	useEffect(() => {
-		if (customTuners.length === 0) {
+		if (customTuners.length === 0 && !isDeletingRef.current) {
 			navigate({
 				to: "/",
 			});
@@ -29,9 +31,19 @@ function TunerDetailPage() {
 		alert("チューニング設定を更新しました。");
 	};
 
+	const handleDeleteButtonClick = (id: string) => {
+		isDeletingRef.current = true;
+		deleteCustomTuner({ id });
+		alert("チューニング設定を削除しました。");
+		navigate({
+			to: "/tuners",
+		});
+	};
+
 	return (
 		<CommonTunerPage
 			customTuner={customTuners[0]}
+			handleDeleteButtonClick={handleDeleteButtonClick}
 			handleSaveButtonClick={handleSaveButtonClick}
 		/>
 	);
