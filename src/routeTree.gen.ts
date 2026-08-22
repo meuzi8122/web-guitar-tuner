@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TunersIndexRouteImport } from './routes/tuners/index'
+import { Route as TunersIdRouteImport } from './routes/tuners/$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TunersIndexRoute = TunersIndexRouteImport.update({
+  id: '/tuners/',
+  path: '/tuners/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TunersIdRoute = TunersIdRouteImport.update({
+  id: '/tuners/$id',
+  path: '/tuners/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/tuners/$id': typeof TunersIdRoute
+  '/tuners/': typeof TunersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/tuners/$id': typeof TunersIdRoute
+  '/tuners': typeof TunersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/tuners/$id': typeof TunersIdRoute
+  '/tuners/': typeof TunersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/tuners/$id' | '/tuners/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/tuners/$id' | '/tuners'
+  id: '__root__' | '/' | '/tuners/$id' | '/tuners/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TunersIdRoute: typeof TunersIdRoute
+  TunersIndexRoute: typeof TunersIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tuners/': {
+      id: '/tuners/'
+      path: '/tuners'
+      fullPath: '/tuners/'
+      preLoaderRoute: typeof TunersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tuners/$id': {
+      id: '/tuners/$id'
+      path: '/tuners/$id'
+      fullPath: '/tuners/$id'
+      preLoaderRoute: typeof TunersIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TunersIdRoute: TunersIdRoute,
+  TunersIndexRoute: TunersIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

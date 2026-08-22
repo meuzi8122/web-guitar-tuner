@@ -36,8 +36,8 @@ export function Navbar() {
 						className="menu dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
 					>
 						<li>
-							<Link to="/">チューニングする</Link>
-							<Link to="/tuners">Myチューニング</Link>
+							<Link to="/">新規チューナー</Link>
+							<Link to="/tuners">Myチューナー</Link>
 						</li>
 					</ul>
 				</div>
