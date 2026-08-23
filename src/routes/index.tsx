@@ -4,10 +4,13 @@ import {
 	type HandleSaveButtonClickArgs,
 } from "#/features/tuner/components/common-tuner-page";
 import { useCustomTuners } from "#/features/tuner/hooks/use-custom-tuners";
+import { authClient } from "#/infrastructures/auth";
 
 export const Route = createFileRoute("/")({ component: Home });
 
 function Home() {
+	const { data } = authClient.useSession();
+
 	const navigate = Route.useNavigate();
 
 	const { createCustomTuner } = useCustomTuners();
@@ -15,6 +18,11 @@ function Home() {
 	const handleCreateCustomTunerButtonClick = (
 		tuner: HandleSaveButtonClickArgs,
 	) => {
+		if (!data) {
+			alert("チューニング設定を保存するにはログインが必要です");
+			return;
+		}
+
 		const id = crypto.randomUUID();
 		createCustomTuner({
 			tuner: { ...tuner, id },
