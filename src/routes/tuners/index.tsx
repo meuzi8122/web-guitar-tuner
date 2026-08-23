@@ -2,9 +2,13 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { TrashIcon } from "#/components/icons/trash-icon";
 import { useCustomTuners } from "#/features/tuner/hooks/use-custom-tuners";
+import { authMiddleware } from "#/infrastructures/middlewares/auth";
 
 export const Route = createFileRoute("/tuners/")({
 	component: TunerListPage,
+	server: {
+		middleware: [authMiddleware],
+	},
 });
 
 function TunerListPage() {

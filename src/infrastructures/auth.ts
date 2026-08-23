@@ -1,4 +1,5 @@
 import { betterAuth } from "better-auth";
+import { createAuthClient } from "better-auth/react";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 
 export const auth = betterAuth({
@@ -11,3 +12,5 @@ export const auth = betterAuth({
 	},
 	plugins: [tanstackStartCookies()],
 });
+
+export const authClient = createAuthClient({});

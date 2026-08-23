@@ -1,6 +1,9 @@
 import { Link } from "@tanstack/react-router";
+import { authClient } from "#/infrastructures/auth";
 
 export function Navbar() {
+	const { data } = authClient.useSession();
+
 	return (
 		<div className="navbar bg-base-100 shadow-sm">
 			<div className="flex-1">
@@ -37,7 +40,13 @@ export function Navbar() {
 					>
 						<li>
 							<Link to="/">新規チューナー</Link>
-							<Link to="/tuners">Myチューナー</Link>
+							{data && (
+								<>
+									<Link to="/tuners">Myチューナー</Link>
+									<Link to="/logout">ログアウト</Link>
+								</>
+							)}
+							{!data && <Link to="/login">ログイン</Link>}
 						</li>
 					</ul>
 				</div>
