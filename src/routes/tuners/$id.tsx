@@ -5,6 +5,7 @@ import {
 	type HandleSaveButtonClickArgs,
 } from "#/features/tuner/components/common-tuner-page";
 import { useCustomTuners } from "#/features/tuner/hooks/use-custom-tuners";
+import { authClient } from "#/infrastructures/auth";
 
 export const Route = createFileRoute("/tuners/$id")({
 	component: TunerDetailPage,
@@ -12,6 +13,8 @@ export const Route = createFileRoute("/tuners/$id")({
 
 function TunerDetailPage() {
 	const { id } = Route.useParams();
+
+	const { data } = authClient.useSession();
 
 	const { customTuners, updateCustomTuner, deleteCustomTuner } =
 		useCustomTuners({ id });
@@ -27,8 +30,12 @@ function TunerDetailPage() {
 	}, [customTuners, navigate]);
 
 	const handleSaveButtonClick = (tuner: HandleSaveButtonClickArgs) => {
-		updateCustomTuner({ tuner: { ...tuner, id: id } });
-		alert("チューニング設定を更新しました。");
+		if (!data?.user.id) {
+			alert("ログインしていません");
+			return;
+		}
+		updateCustomTuner({ tuner: { ...tuner, id: id, ownerId: data.user.id } });
+		alert("チューニング設定を更新しました");
 	};
 
 	const handleDeleteButtonClick = (id: string) => {

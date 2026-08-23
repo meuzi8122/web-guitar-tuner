@@ -25,7 +25,7 @@ function Home() {
 
 		const id = crypto.randomUUID();
 		createCustomTuner({
-			tuner: { ...tuner, id },
+			tuner: { ...tuner, id, ownerId: data.user.id },
 		});
 		navigate({
 			to: "/tuners/$id",

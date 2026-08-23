@@ -3,6 +3,7 @@ import z from "zod";
 
 const tunerSchema = z.object({
 	id: z.string(),
+	ownerId: z.string(),
 	name: z.string().min(1),
 	tunings: z.array(
 		z.object({

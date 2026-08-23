@@ -5,7 +5,9 @@ import { TrashIcon } from "#/components/icons/trash-icon";
 import { DEFAULT_TUNERS, type Tuner } from "#/domains/entities/tuner";
 import { FREQUENCIES, useTuning } from "#/features/tuner/hooks/use-tuning";
 
-export type HandleSaveButtonClickArgs = Omit<Tuner, "id"> & { id?: string };
+export type HandleSaveButtonClickArgs = Omit<Tuner, "id" | "ownerId"> & {
+	id?: string;
+};
 
 export function CommonTunerPage({
 	customTuner,
@@ -110,13 +112,13 @@ export function CommonTunerPage({
 							className="select w-full"
 							onChange={(e) =>
 								initTuner(
-									DEFAULT_TUNERS.find((tuner) => tuner.id === e.target.value)
+									DEFAULT_TUNERS.find((tuner) => tuner.key === e.target.value)
 										?.tunings || [],
 								)
 							}
 						>
 							{DEFAULT_TUNERS.map((tuner) => (
-								<option key={tuner.id} value={tuner.id}>
+								<option key={tuner.key} value={tuner.key}>
 									{tuner.name}
 								</option>
 							))}

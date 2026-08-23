@@ -1,5 +1,6 @@
 export type Tuner = {
 	id: string;
+	ownerId: string;
 	name: string;
 	tunings: Tuning[];
 };
@@ -9,9 +10,11 @@ export interface Tuning {
 	note: string;
 }
 
-export const DEFAULT_TUNERS: Tuner[] = [
+export const DEFAULT_TUNERS: (Omit<Tuner, "id" | "ownerId"> & {
+	key: string;
+})[] = [
 	{
-		id: "1",
+		key: "regular",
 		name: "レギュラーチューニング",
 		tunings: [
 			{ position: "1弦", note: "E4" },
@@ -23,7 +26,7 @@ export const DEFAULT_TUNERS: Tuner[] = [
 		],
 	},
 	{
-		id: "2",
+		key: "half-step-down",
 		name: "半音下げ",
 		tunings: [
 			{ position: "1弦", note: "Eb4" },
@@ -35,7 +38,7 @@ export const DEFAULT_TUNERS: Tuner[] = [
 		],
 	},
 	{
-		id: "3",
+		key: "drop-d",
 		name: "Drop D",
 		tunings: [
 			{ position: "1弦", note: "E4" },
@@ -47,7 +50,7 @@ export const DEFAULT_TUNERS: Tuner[] = [
 		],
 	},
 	{
-		id: "4",
+		key: "open-d",
 		name: "Open D",
 		tunings: [
 			{ position: "1弦", note: "D4" },
@@ -59,7 +62,7 @@ export const DEFAULT_TUNERS: Tuner[] = [
 		],
 	},
 	{
-		id: "5",
+		key: "dadgad",
 		name: "DADGAD",
 		tunings: [
 			{ position: "1弦", note: "D4" },
