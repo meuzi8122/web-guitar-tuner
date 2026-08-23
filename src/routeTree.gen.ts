@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TunersIndexRouteImport } from './routes/tuners/index'
 import { Route as TunersIdRouteImport } from './routes/tuners/$id'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const TunersIdRoute = TunersIdRouteImport.update({
   path: '/tuners/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/tuners/$id': typeof TunersIdRoute
   '/tuners/': typeof TunersIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/tuners/$id': typeof TunersIdRoute
   '/tuners': typeof TunersIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/tuners/$id': typeof TunersIdRoute
   '/tuners/': typeof TunersIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/tuners/$id' | '/tuners/'
+  fullPaths: '/' | '/tuners/$id' | '/tuners/' | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/tuners/$id' | '/tuners'
-  id: '__root__' | '/' | '/tuners/$id' | '/tuners/'
+  to: '/' | '/tuners/$id' | '/tuners' | '/api/auth/$'
+  id: '__root__' | '/' | '/tuners/$id' | '/tuners/' | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TunersIdRoute: typeof TunersIdRoute
   TunersIndexRoute: typeof TunersIndexRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TunersIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TunersIdRoute: TunersIdRoute,
   TunersIndexRoute: TunersIndexRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
