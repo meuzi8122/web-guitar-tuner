@@ -46,14 +46,14 @@ export function CommonTunerPage({
 	return (
 		<div className="container mx-auto flex flex-col space-y-3 items-center p-4">
 			<div className="w-full overflow-x-auto">
-				<div className="stats bg-base-200 border border-base-300 shadow-md">
+				<div className="stats w-full auto-cols-[minmax(10rem,1fr)] bg-base-200 border border-base-300 shadow-md">
 					{currentTunings.map((tuning) => {
 						const fontColor = tuning.selected ? "text-primary" : "";
 						return (
 							<button
 								type="button"
 								key={tuning.position}
-								className="stat place-items-center cursor-pointer min-w-40"
+								className="stat place-items-center cursor-pointer"
 								onClick={() => selectTuning({ position: tuning.position })}
 							>
 								<span className={`stat-title ${fontColor}`}>
@@ -70,8 +70,8 @@ export function CommonTunerPage({
 			</div>
 			<div className="rounded-box border border-base-300 bg-base-100 shadow-md p-4 w-full flex flex-col space-y-3 overflow-x-auto">
 				<h2 className="mb-2 font-bold">チューニング設定</h2>
-				<div className="flex flex-col space-y-4 xl:flex-row xl:space-x-4 xl:space-y-0">
-					<fieldset className="fieldset xl:flex-[2]">
+				<div className="flex flex-col space-y-4">
+					<fieldset className="fieldset">
 						<legend className="fieldset-legend">ラベル</legend>
 						<input
 							type="text"
@@ -81,13 +81,13 @@ export function CommonTunerPage({
 							onChange={(e) => setName(e.target.value)}
 						/>
 					</fieldset>
-					<fieldset className="fieldset xl:flex-1">
+					<fieldset className="fieldset">
 						<legend className="fieldset-legend">楽器</legend>
 						<select className="select w-full">
 							<option>6弦ギター</option>
 						</select>
 					</fieldset>
-					<fieldset className="fieldset xl:flex-1">
+					<fieldset className="fieldset">
 						<legend className="fieldset-legend">
 							選択した弦の音程を変更
 							{selectedTuning ? `（${selectedTuning?.position}を選択中）` : ""}
@@ -105,7 +105,7 @@ export function CommonTunerPage({
 							))}
 						</select>
 					</fieldset>
-					<fieldset className="fieldset xl:flex-1">
+					<fieldset className="fieldset">
 						<legend className="fieldset-legend">音程を一括変更</legend>
 						{/* ここのselectのvalueは未指定にする */}
 						<select
