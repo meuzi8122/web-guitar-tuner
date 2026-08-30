@@ -2,11 +2,11 @@ import type { Tuner } from "#/domains/entities/tuner";
 import type { TunerRepository } from "#/repositories/interfaces/tuner";
 
 export async function createTuner(
-	params: { tuner: Omit<Tuner, "id"> },
-	deps: { tunerRepository: TunerRepository; generateId: () => string },
+	params: { tuner: Tuner },
+	deps: { tunerRepository: TunerRepository },
 ) {
 	const { tuner } = params;
-	const { tunerRepository, generateId } = deps;
+	const { tunerRepository } = deps;
 
-	await tunerRepository.createTuner({ tuner: { ...tuner, id: generateId() } });
+	await tunerRepository.createTuner({ tuner });
 }

@@ -16,18 +16,21 @@ function TunerDetailPage() {
 
 	const { data } = authClient.useSession();
 
-	const { customTuners, updateCustomTuner, deleteCustomTuner } =
+	const { customTuners, isReady, updateCustomTuner, deleteCustomTuner } =
 		useCustomTuners({ id });
 
 	const navigate = Route.useNavigate();
 	const isDeletingRef = useRef(false);
 	useEffect(() => {
-		if (customTuners.length === 0 && !isDeletingRef.current) {
+		// Only redirect once the collection has finished loading. Otherwise a
+		// freshly-created tuner (collection still syncing) looks like it doesn't
+		// exist and we bounce back to "/".
+		if (isReady && customTuners.length === 0 && !isDeletingRef.current) {
 			navigate({
 				to: "/",
 			});
 		}
-	}, [customTuners, navigate]);
+	}, [isReady, customTuners, navigate]);
 
 	const handleSaveButtonClick = (tuner: HandleSaveButtonClickArgs) => {
 		if (!data?.user.id) {

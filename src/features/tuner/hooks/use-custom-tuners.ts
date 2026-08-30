@@ -1,9 +1,9 @@
 import { eq, like, useLiveQuery } from "@tanstack/react-db";
+import { tunerCollection } from "#/collections/tuner";
 import type { Tuner } from "#/domains/entities/tuner";
-import { tunerCollection } from "../collection";
 
 export function useCustomTuners(params?: { id?: string; keyword?: string }) {
-	const { data } = useLiveQuery((q) => {
+	const { data, isReady } = useLiveQuery((q) => {
 		if (params?.id) {
 			return q
 				.from({ tuner: tunerCollection })
@@ -34,6 +34,7 @@ export function useCustomTuners(params?: { id?: string; keyword?: string }) {
 
 	return {
 		customTuners: data,
+		isReady,
 		createCustomTuner,
 		updateCustomTuner,
 		deleteCustomTuner,
