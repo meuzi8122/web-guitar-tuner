@@ -8,5 +8,5 @@ export async function createTuner(
 	const { tuner } = params;
 	const { tunerRepository } = deps;
 
-	await tunerRepository.createTuner({ tuner });
+	await tunerRepository.create({ tuner });
 }
