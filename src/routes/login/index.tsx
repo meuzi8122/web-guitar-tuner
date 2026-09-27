@@ -14,7 +14,9 @@ function RouteComponent() {
 
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen space-y-3">
-			<p className="font-lg">ログインするとチューニング設定を保存できます</p>
+			<p className="font-lg">
+				ログインするとチューニング設定の保存や、TAB譜から設定のインポートが可能です
+			</p>
 			<div className="p-8 rounded bg-base-200 shadow-md w-full max-w-md">
 				<button
 					type="button"
