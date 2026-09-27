@@ -92,24 +92,25 @@ export function CommonTunerPage({
 							<option>6弦ギター</option>
 						</select>
 					</fieldset>
-					<fieldset className="fieldset">
-						<legend className="fieldset-legend">
-							選択した弦の音程を変更
-							{selectedTuning ? `（${selectedTuning?.position}を選択中）` : ""}
-						</legend>
-						<select
-							className="select w-full"
-							value={selectedTuning?.note}
-							onChange={(e) => updateNote({ note: e.target.value })}
-							disabled={!selectedTuning}
-						>
-							{Object.keys(FREQUENCIES).map((note) => (
-								<option key={note} value={note}>
-									{note}
-								</option>
-							))}
-						</select>
-					</fieldset>
+					{selectedTuning && (
+						<fieldset className="fieldset">
+							<legend className="fieldset-legend">
+								{selectedTuning?.position}の音程を変更
+							</legend>
+							<select
+								className="select w-full"
+								value={selectedTuning?.note}
+								onChange={(e) => updateNote({ note: e.target.value })}
+								disabled={!selectedTuning}
+							>
+								{Object.keys(FREQUENCIES).map((note) => (
+									<option key={note} value={note}>
+										{note}
+									</option>
+								))}
+							</select>
+						</fieldset>
+					)}
 					<fieldset className="fieldset">
 						<legend className="fieldset-legend">音程を一括変更</legend>
 						{/* ここのselectのvalueは未指定にする */}
