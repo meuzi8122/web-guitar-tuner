@@ -50,9 +50,18 @@ function TunerDetailPage() {
 		});
 	};
 
+	// collection のロードが終わるまで（customTuner が未取得の間）はフォームを描画しない。
+	// CommonTunerPage は customTuner を useState の初期値としてのみ参照するため、
+	// undefined のままマウントすると後からデータが来ても値が反映されない。
+	const tuner = customTuners[0];
+	if (!isReady || !tuner) {
+		return null;
+	}
+
 	return (
 		<CommonTunerPage
-			customTuner={customTuners[0]}
+			key={tuner.id}
+			customTuner={tuner}
 			handleDeleteButtonClick={handleDeleteButtonClick}
 			handleSaveButtonClick={handleSaveButtonClick}
 		/>
