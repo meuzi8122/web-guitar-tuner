@@ -24,9 +24,7 @@ export function CommonTunerPage({
 	const selectedTuning = currentTunings.find((tuning) => tuning.selected);
 
 	const [name, setName] = useState(customTuner ? customTuner.name : "");
-	const [instrument, setInstrument] = useState(
-		customTuner?.instrument ?? "",
-	);
+	const [instrument, setInstrument] = useState(customTuner?.instrument ?? "");
 
 	useEffect(() => {
 		const tuner = createTuner({
@@ -77,7 +75,7 @@ export function CommonTunerPage({
 					})}
 				</div>
 			</div>
-			<div className="rounded-box border border-base-300 bg-base-100 shadow-md p-4 w-full flex flex-col space-y-3 overflow-x-auto">
+			<div className="rounded-box border border-base-300 bg-base-200 shadow-md p-4 w-full flex flex-col space-y-3 overflow-x-auto">
 				<h2 className="mb-2 font-bold">チューニング設定</h2>
 				<Link to="/import-tuners" className="link link-primary text-sm mt-1">
 					TAB譜から設定をインポートする
