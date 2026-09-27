@@ -5,7 +5,7 @@ export function Navbar() {
 	const { data } = authClient.useSession();
 
 	return (
-		<div className="navbar bg-base-100 shadow-sm">
+		<div className="navbar bg-base-100 shadow-sm mb-2">
 			<div className="flex-1">
 				<Link to="/" className="btn btn-ghost text-xl">
 					WebTuner

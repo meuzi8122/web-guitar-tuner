@@ -44,7 +44,12 @@ export function CommonTunerPage({
 	};
 
 	return (
-		<div className="container mx-auto flex flex-col space-y-3 items-center p-4">
+		<div className="container mx-auto flex flex-col space-y-3 items-center p-6">
+			<h1 className="text-sm">
+				{selectedTuning
+					? `${selectedTuning.position}を鳴らしてください`
+					: "チューニングする弦をクリック"}
+			</h1>
 			<div className="w-full overflow-x-auto">
 				<div className="stats w-full auto-cols-[minmax(10rem,1fr)] bg-base-200 border border-base-300 shadow-md">
 					{currentTunings.map((tuning) => {
