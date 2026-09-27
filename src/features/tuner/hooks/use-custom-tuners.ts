@@ -1,5 +1,6 @@
 import { eq, like, useLiveQuery } from "@tanstack/react-db";
 import { tunerCollection } from "#/collections/tuner";
+import { importTunersFn } from "#/collections/tuner/import-tuners";
 import type { Tuner } from "#/domains/entities/tuner";
 
 export function useCustomTuners(params?: { id?: string; keyword?: string }) {
@@ -32,11 +33,19 @@ export function useCustomTuners(params?: { id?: string; keyword?: string }) {
 		tunerCollection.delete(params.id);
 	};
 
+	const importCustomTuners = async (params: { file: File }) => {
+		const formData = new FormData();
+		formData.append("file", params.file);
+		await importTunersFn({ data: formData });
+		await tunerCollection.utils.refetch(); // collection と整合を取る
+	};
+
 	return {
 		customTuners: data,
 		isReady,
 		createCustomTuner,
 		updateCustomTuner,
 		deleteCustomTuner,
+		importCustomTuners,
 	};
 }

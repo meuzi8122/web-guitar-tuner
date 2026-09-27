@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ImportTunersIndexRouteImport } from './routes/import-tuners/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as LogoutIndexRouteImport } from './routes/logout/index'
 import { Route as TunersIndexRouteImport } from './routes/tuners/index'
@@ -19,6 +20,11 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImportTunersIndexRoute = ImportTunersIndexRouteImport.update({
+  id: '/import-tuners/',
+  path: '/import-tuners/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginIndexRoute = LoginIndexRouteImport.update({
@@ -50,6 +56,7 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/tuners/$id': typeof TunersIdRoute
+  '/import-tuners/': typeof ImportTunersIndexRoute
   '/login/': typeof LoginIndexRoute
   '/logout/': typeof LogoutIndexRoute
   '/tuners/': typeof TunersIndexRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/tuners/$id': typeof TunersIdRoute
+  '/import-tuners': typeof ImportTunersIndexRoute
   '/login': typeof LoginIndexRoute
   '/logout': typeof LogoutIndexRoute
   '/tuners': typeof TunersIndexRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/tuners/$id': typeof TunersIdRoute
+  '/import-tuners/': typeof ImportTunersIndexRoute
   '/login/': typeof LoginIndexRoute
   '/logout/': typeof LogoutIndexRoute
   '/tuners/': typeof TunersIndexRoute
@@ -75,13 +84,27 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/tuners/$id' | '/login/' | '/logout/' | '/tuners/' | '/api/auth/$'
+    | '/'
+    | '/tuners/$id'
+    | '/import-tuners/'
+    | '/login/'
+    | '/logout/'
+    | '/tuners/'
+    | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/tuners/$id' | '/login' | '/logout' | '/tuners' | '/api/auth/$'
+  to:
+    | '/'
+    | '/tuners/$id'
+    | '/import-tuners'
+    | '/login'
+    | '/logout'
+    | '/tuners'
+    | '/api/auth/$'
   id:
     | '__root__'
     | '/'
     | '/tuners/$id'
+    | '/import-tuners/'
     | '/login/'
     | '/logout/'
     | '/tuners/'
@@ -91,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TunersIdRoute: typeof TunersIdRoute
+  ImportTunersIndexRoute: typeof ImportTunersIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
   LogoutIndexRoute: typeof LogoutIndexRoute
   TunersIndexRoute: typeof TunersIndexRoute
@@ -104,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/import-tuners/': {
+      id: '/import-tuners/'
+      path: '/import-tuners'
+      fullPath: '/import-tuners/'
+      preLoaderRoute: typeof ImportTunersIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login/': {
@@ -147,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TunersIdRoute: TunersIdRoute,
+  ImportTunersIndexRoute: ImportTunersIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
   LogoutIndexRoute: LogoutIndexRoute,
   TunersIndexRoute: TunersIndexRoute,
