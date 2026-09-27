@@ -55,7 +55,7 @@ function TunerListPage() {
 								}}
 							>
 								<td>{tuner.name}</td>
-								<td>6弦ギター</td>
+								<td>{tuner.instrument ?? "未設定"}</td>
 								<td>{tuner.tunings.map((tuning) => tuning.note).join("-")}</td>
 								<td>
 									<button

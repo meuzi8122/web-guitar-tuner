@@ -14,6 +14,7 @@ export const findTunersFn = createServerFn({ method: "GET" })
 			id: row.id as string,
 			name: row.name as string,
 			ownerId: row.owner_id as string,
+			instrument: (row.instrument as string | null) ?? undefined,
 			tunings: JSON.parse(row.tunings as string),
 		}));
 	});

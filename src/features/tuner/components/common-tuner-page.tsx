@@ -1,4 +1,5 @@
 import { createTuner } from "@chordbook/tuner";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SaveIcon } from "#/components/icons/save-icon";
 import { TrashIcon } from "#/components/icons/trash-icon";
@@ -23,6 +24,9 @@ export function CommonTunerPage({
 	const selectedTuning = currentTunings.find((tuning) => tuning.selected);
 
 	const [name, setName] = useState(customTuner ? customTuner.name : "");
+	const [instrument, setInstrument] = useState(
+		customTuner?.instrument ?? "",
+	);
 
 	useEffect(() => {
 		const tuner = createTuner({
@@ -75,6 +79,9 @@ export function CommonTunerPage({
 			</div>
 			<div className="rounded-box border border-base-300 bg-base-100 shadow-md p-4 w-full flex flex-col space-y-3 overflow-x-auto">
 				<h2 className="mb-2 font-bold">チューニング設定</h2>
+				<Link to="/import-tuners" className="link link-primary text-sm mt-1">
+					TAB譜から設定をインポートする
+				</Link>
 				<div className="flex flex-col space-y-4">
 					<fieldset className="fieldset">
 						<legend className="fieldset-legend">ラベル</legend>
@@ -88,9 +95,13 @@ export function CommonTunerPage({
 					</fieldset>
 					<fieldset className="fieldset">
 						<legend className="fieldset-legend">楽器</legend>
-						<select className="select w-full">
-							<option>6弦ギター</option>
-						</select>
+						<input
+							type="text"
+							placeholder="例:「6弦ギター」「ジャズマスター」など"
+							className="input w-full"
+							value={instrument}
+							onChange={(e) => setInstrument(e.target.value)}
+						/>
 					</fieldset>
 					{selectedTuning && (
 						<fieldset className="fieldset">
@@ -148,6 +159,7 @@ export function CommonTunerPage({
 						onClick={() => {
 							handleSaveButtonClick({
 								name,
+								instrument: instrument.trim() === "" ? undefined : instrument,
 								tunings: currentTunings.map(({ position, note }) => ({
 									position,
 									note,

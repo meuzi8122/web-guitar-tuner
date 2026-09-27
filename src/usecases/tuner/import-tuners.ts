@@ -12,6 +12,7 @@ export async function importTuners(
 		id: deps.generateId(),
 		ownerId: params.ownerId,
 		name: parsed.artist ? `${parsed.title} - ${parsed.artist}` : parsed.title,
+		instrument: track.instrument ?? undefined,
 		tunings: track.tuning.map((tuning, index) => ({
 			position: (index + 1).toString(),
 			note: tuning.name,

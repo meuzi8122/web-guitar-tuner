@@ -22,6 +22,7 @@ function ImportTunerPage() {
 	const handleSubmit = async () => {
 		if (file) {
 			await importCustomTuners({ file });
+			alert("チューナーをインポートしました。");
 			navigate({ to: "/tuners" });
 		}
 	};

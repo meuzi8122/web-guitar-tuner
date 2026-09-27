@@ -4,6 +4,7 @@ import { z } from "zod";
 export const tunerSchema = z.object({
 	id: z.string(),
 	name: z.string(),
+	instrument: z.string().optional(),
 	tunings: z.array(
 		z.object({
 			position: z.string(),

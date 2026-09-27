@@ -2,6 +2,7 @@ export type Tuner = {
 	id: string;
 	ownerId: string;
 	name: string;
+	instrument?: string;
 	tunings: Tuning[];
 };
 
