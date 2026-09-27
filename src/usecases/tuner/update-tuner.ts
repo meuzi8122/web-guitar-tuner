@@ -8,5 +8,5 @@ export async function updateTuner(
 	const { tuner } = params;
 	const { tunerRepository } = deps;
 
-	await tunerRepository.updateTuner({ tuner });
+	await tunerRepository.update({ tuner });
 }

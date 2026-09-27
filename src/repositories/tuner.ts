@@ -3,7 +3,7 @@ import type { TunerRepository } from "./interfaces/tuner";
 
 export function createTunerRepository(db: DbClient): TunerRepository {
 	return {
-		async createTuner({ tuner }): Promise<void> {
+		async create({ tuner }): Promise<void> {
 			await db.execute({
 				query: `INSERT INTO tuner (id, name, owner_id, tunings) VALUES (?, ?, ?, ?)`,
 				values: [
@@ -14,7 +14,22 @@ export function createTunerRepository(db: DbClient): TunerRepository {
 				],
 			});
 		},
-		async updateTuner({ tuner }): Promise<void> {
+		async createMany({ tuners }): Promise<void> {
+			if (tuners.length === 0) {
+				return;
+			}
+			const placeholders = tuners.map(() => `(?, ?, ?, ?)`).join(", ");
+			await db.execute({
+				query: `INSERT INTO tuner (id, name, owner_id, tunings) VALUES ${placeholders}`,
+				values: tuners.flatMap((tuner) => [
+					tuner.id,
+					tuner.name,
+					tuner.ownerId,
+					JSON.stringify(tuner.tunings),
+				]),
+			});
+		},
+		async update({ tuner }): Promise<void> {
 			await db.execute({
 				query: `UPDATE tuner SET name = ?, tunings = ? WHERE id = ? AND owner_id = ?`,
 				values: [
@@ -25,7 +40,7 @@ export function createTunerRepository(db: DbClient): TunerRepository {
 				],
 			});
 		},
-		async deleteTuner({ id, ownerId }): Promise<void> {
+		async delete({ id, ownerId }): Promise<void> {
 			await db.execute({
 				query: `DELETE FROM tuner WHERE id = ? AND owner_id = ?`,
 				values: [id, ownerId],

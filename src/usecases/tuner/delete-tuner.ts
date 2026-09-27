@@ -7,5 +7,5 @@ export async function deleteTuner(
 	const { id, ownerId } = params;
 	const { tunerRepository } = deps;
 
-	await tunerRepository.deleteTuner({ id, ownerId });
+	await tunerRepository.delete({ id, ownerId });
 }
