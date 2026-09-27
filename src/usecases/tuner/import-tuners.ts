@@ -14,7 +14,7 @@ export async function importTuners(
 		name: parsed.artist ? `${parsed.title} - ${parsed.artist}` : parsed.title,
 		instrument: track.instrument ?? undefined,
 		tunings: track.tuning.map((tuning, index) => ({
-			position: (index + 1).toString(),
+			position: `${index + 1}弦`,
 			note: tuning.name,
 		})),
 	}));
